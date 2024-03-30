@@ -1,10 +1,15 @@
-import { Button, Chip, ChipDelete, FormControl, Grid, Input, Stack } from "@mui/joy";
+import { Button, Chip, ChipDelete, FormControl, Grid, Input, Stack, Typography } from "@mui/joy";
 import { Balloon } from "@phosphor-icons/react";
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
+
 
 export const FieldsSelector = () => {
-    const [fields, setfields] = useState<string[]>([]);
+    const [fields, setfields] = useState<string[]>(
+        JSON.parse(localStorage.getItem('fields') || '[]')
+    );
     const [field, setField] = useState<string>('');
+
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (field) {
@@ -12,6 +17,10 @@ export const FieldsSelector = () => {
             setField('');
         }
     }
+
+    useEffect(() => {
+        localStorage.setItem('fields', JSON.stringify(fields));
+    }, [fields]);
     return (
         <form onSubmit={onSubmit}>
             <FormControl>
@@ -26,13 +35,12 @@ export const FieldsSelector = () => {
                         endDecorator={<Button type="submit"> <Balloon size={27} /> </Button>}
                         value={field}
                         placeholder="Escribe un campo"
-                        sx={{"--Input-radius": "17px"}}
-                        style={{ width: '400px' }}
+                        sx={{ "--Input-radius": "17px" }}
+                        style={{ width: '350px' }}
                         size="lg"
                         onChange={(event) => setField(event.target.value)}
 
                     />
-
                     <Grid
                         container
                         direction="row"
@@ -43,7 +51,6 @@ export const FieldsSelector = () => {
                     >
                         {
                             fields.map((field, index) =>
-
                                 <Chip
                                     key={index}
                                     variant="soft"
@@ -57,7 +64,9 @@ export const FieldsSelector = () => {
                                         }
                                     } />}
                                 >
-                                    {field}
+                                    <Typography level="title-lg" >
+                                        { field }
+                                    </Typography>
                                 </Chip>
                             )
                         }
