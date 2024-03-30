@@ -4,7 +4,6 @@ import { FieldsSelector } from './components/FieldsSelector'
 
 
 function App() {
-
 	return (
 		<Stack
 			direction="column"

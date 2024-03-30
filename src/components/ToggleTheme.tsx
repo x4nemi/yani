@@ -56,10 +56,10 @@ export default function ModeToggle() {
         sx={{
           textAlign: 'center',
           flexGrow: 1,
-          p: 2,
-          m: -3,
+          mt: 2,
           borderRadius: [0, 'sm'],
-          mb:2,
+          top: 0,
+          position: 'fixed',
         }}
       >
         <ModeSwitcher />
